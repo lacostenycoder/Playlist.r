@@ -15,6 +15,6 @@ This app will use the [Soundcloud API](http://developers.soundcloud.com/docs), a
 
 
 ### ERD
-![erd](http://i.imgur.com/Qm8tkOH.jpg)
+![erd](http://i.imgur.com/MR0CTVQ.jpg)
 
 
