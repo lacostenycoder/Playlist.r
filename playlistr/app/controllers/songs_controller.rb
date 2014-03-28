@@ -1,5 +1,5 @@
-class Song < ApplicationController
+class SongsController < ApplicationController
 
-  belongs_to_and_has_many :playlists
+
 
 end
