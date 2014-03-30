@@ -18,4 +18,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  ###  implement admin functions later (make users admins, playlists etc.)
+  def user_is_admin
+    chech_admin = User.find(session[:user_id])
+    if check_admin.admin == 'true'
+      return
+    else
+      flash[:notice] = "Not Authorized, must be admin."
+    end
+  end
+
 end

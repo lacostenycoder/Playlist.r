@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  # before_action :require_authentication, only: [:edit, :update, :destroy]
+
   def index
     @users = User.all
   end
@@ -16,7 +18,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to @user
+      redirect_to root_path
     else
       render 'new'
     end
@@ -42,7 +44,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    prams.require(:user).permit(:namename, :email, :password, :password_conf, :admin, :souncloud_username)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :admin, :souncloud_username)
   end
 
 end

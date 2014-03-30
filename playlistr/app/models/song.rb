@@ -1,5 +1,5 @@
-class Song < ApplicationController
+class Song < ActiveRecord::Base
 
-  belongs_to_and_has_many :playlists
+   has_and_belongs_to_many :playlists
 
 end

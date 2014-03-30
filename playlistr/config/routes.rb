@@ -1,4 +1,18 @@
 Playlistr::Application.routes.draw do
+
+  get '/login', to: 'sessions#new'
+  post '/sessions', to: 'sessions#create'
+  get '/logout', to: 'sessions#destroy'
+
+  resources :users, shallow: true do
+    resources :playlists
+  end
+
+  resources :songs do
+  end
+
+  root to: 'users#welcome'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

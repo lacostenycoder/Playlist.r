@@ -46,3 +46,16 @@ end
 
 gem 'nokogiri'
 
+#gem 'beatport'
+
+gem 'soundcloud'
+
+gem 'pry-rails'
+
+# for use with Chrome Rails Panel developer tool - see warnings
+#If you're using LiveReload or Rack::LiveReload make sure to exclude watching
+#your tmp/ folder because meta_request writes a lot of data there and your browser
+#will refresh like a madman.
+# group :development do
+#   gem 'meta_request'
+# end

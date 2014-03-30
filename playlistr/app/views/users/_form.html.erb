@@ -1,0 +1,32 @@
+<%= form_for(@user) do |f| %>
+
+  <% if @user.errors.any? %>
+    Please correct the following errors:
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div class="field">
+    <%= f.text_field :username %> <%= f.label :username %>
+  </div>
+  <div class="field">
+    <%= f.text_field :email %> <%= f.label :email %>
+  </div>
+
+  <div class="field">
+    <%= f.password_field :password %> <%= f.label :password %>
+  </div>
+  <div class="field">
+    <%= f.password_field :password_confirmation %> <%= f.label :password_confirmation %>
+  </div>
+  <div class="field">
+    <%= f.password_field :soundcloud_username %> (optional) <%= f.label :soundcloud_username %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
