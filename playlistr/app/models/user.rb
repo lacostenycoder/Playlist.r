@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_secure_password
   has_many :playlists
+
   # has_many :songs, :through => :playlists_songs
 
   # accepts_nested_attributes

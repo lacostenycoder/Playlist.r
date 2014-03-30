@@ -1,0 +1,22 @@
+<%= form_for(@featured_list) do |f| %>
+<div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <p>
+  <div class="field">
+    <%= f.text_field :month %>
+    <%= f.select :month, FeaturedList::MONTHS %>
+  </div></p>
+<p><div class="field">
+    <%= f.text_field :year %>
+    <%= f.select :year, FeaturedList::YEARS %>
+</div></p>
+<p><div class="field">
+  <%= f.label :soundcloud_url %>
+  <%= f.text_field :soundcloud_url %>
+</div>
+  <div class="actions">
+    <%= f.submit %>
+  </div></p>
+<% end %>
