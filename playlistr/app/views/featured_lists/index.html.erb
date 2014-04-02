@@ -2,13 +2,19 @@
 
 <% if @featured_lists %>
   <% @featured_lists.each do |featured| %>
-    <%= featured.title %>
+    <iframe width="80%" height="160" scrolling="no" frameborder="no" src="
+    <%= featured.soundcloud_url %>"</iframe>
   <% end %>
 <% end %>
 
-<iframe width="80%" height="200" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/99796200&amp;auto_play=false&amp;hide_related=false&amp;visual=true"></iframe>
+
 
 <p><%= link_to 'New User', new_user_path %></p>
 <p><%= link_to 'New List', new_featured_list_path %></p>
-
+<% if current_user.id? == nil %>
+<p><%= link_to 'Login,', login_path %></p>
+<% end %>
+<% if current_user.id > 0 %>
+<p><%= link_to 'Logout', logout_path %></p>
+<% end %>
 

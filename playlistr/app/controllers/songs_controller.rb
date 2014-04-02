@@ -44,6 +44,7 @@ class SongsController < ApplicationController
   private
 
   def user_params
-    params.require(:title, :artist).permit(:remix, :rank, :soundcloud_url)
+    params.require(:song).permit(:title, :artist, :remix, :rank, :soundcloud_url)
+  end
 
 end

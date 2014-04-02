@@ -4,6 +4,13 @@ Playlistr::Application.routes.draw do
   post '/sessions', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
 
+  get '/lookup', to: 'featured_lists#lookup'
+
+  get '/run_lookup', to: 'featured_lists#run_lookup'
+
+
+
+
   resources :users, shallow: true do
     resources :playlists
   end
