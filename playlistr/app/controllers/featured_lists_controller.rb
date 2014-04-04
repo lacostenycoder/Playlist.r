@@ -5,37 +5,49 @@ class FeaturedListsController < ApplicationController
   end
 
   def soundcloud_links(search)
-    results = []
-    results << @client.get('/search', :q => search)
-    results = tracks[:collection][0..16]
-    results.delete_if { |e| e["duration"] > 900000 }
-    longest = 0
-    results.each do |d|
-      if d["duration"] > longest
-        longest = d["duration"]
+    begin
+    results = SoundCloud.new(:client_id => "476bff90d2af3f775a10bf5bc1f82928").get('/search', :q => search)
+    tracks = []
+    #binding.pry
+    results[:collection].each do |result|
+      if result["kind"] == "track" && result["duration"] < 900000
+        tracks << result
       end
     end
-    track = results.find { |e| e["duration"] == longest }
-    uri = track[:uri].gsub(/\/tracks$/, '')
+    longest = 0
+    tracks.each do |d|
+      longest = d["duration"] if d["duration"] > longest
+    end
+
+    track = tracks.find { |e| e["duration"] == longest }
+    drop = track["uri"].gsub(/http:\/\//, '')
+    uri = drop.gsub(/\/tracks$/, '')
+    return uri
+
+    rescue
+       "Soundcloud Link Not Available"
+    end
   end
 
 
   def run_lookup
-    #render text: params.inspect
-    #chart = get_chart(params[:name], params[:month], params[:year])
+    @add_list = FeaturedList.new(name: "RA Top 50", month: params[:month], year: params[:year])
+    @add_list.save
     noko = 'http://www.residentadvisor.net/dj-charts.aspx?top=50&mn=' + params[:month].to_s + '&yr=' + params[:year].to_s
     link = "Nokogiri::HTML(open('" + noko + "'))"
-    grab = eval(link)
-    @results = grab.map{|b| b.css('td')}.map{|c| c.children.map{|a| a.inner_text}}
+    mess = eval(link)
+    list = mess.css('table.djCharts tr').to_a
+    @results = list.map{|b| b.css('td')}.map{|c| c.children.map{|a| a.inner_text}}
     @results.shift
+    @results.each do |t|
+      search_string = t[2]
+      url = soundcloud_links(search_string)
+      song = Song.create(rank: t[0].to_i, artist: t[2], title: t[3], soundcloud_url: url)
+      song.save
+      @add_list.songs << song
+    end
 
-    #@count_results = @results.count
-
-    # @results.each do |url|
-    #   search_string = url[:title]
-    #   url << soundcloud_links(search_string)
-    # end
-#     gsub(/\/tracks$/, '')
+   return @results
 
   end
 
@@ -46,6 +58,7 @@ class FeaturedListsController < ApplicationController
 
   def show
     @featured_list = FeaturedList.find(params[:id])
+    @songs = @featured_list.songs
   end
 
   def new
