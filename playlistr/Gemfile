@@ -52,6 +52,12 @@ gem 'soundcloud'
 
 gem 'pry-rails'
 
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0.beta'
+end
+
+#gem "twitter-bootstrap-rails"
+
 # for use with Chrome Rails Panel developer tool - see warnings
 #If you're using LiveReload or Rack::LiveReload make sure to exclude watching
 #your tmp/ folder because meta_request writes a lot of data there and your browser

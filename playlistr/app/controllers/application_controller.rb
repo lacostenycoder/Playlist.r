@@ -3,30 +3,29 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  helper_method :current_user
+  helper_method :admin?
+
   def current_user
     if session[:user_id]
       return User.find(session[:user_id])
     else
-      return nil
+      return
     end
   end
 
-  helper_method :current_user
+  # def admin?
+  #   current_user.admin if current_user
+  # end
 
   def user_authenticate
-    if current_user == nil
-      #redirect_to login_path
-    end
+      redirect_to login_path unless current_user
   end
 
-  ###  implement admin functions later (make users admins, playlists etc.)
-  def user_is_admin
-    chech_admin = User.find(session[:user_id])
-    if check_admin.admin == 'true'
-      return
-    else
-      flash[:notice] = "Not Authorized, must be admin."
-    end
-  end
+  # def require_admin
+  #   if !admin?
+  #     redirect_to root_path
+  #   end
+  # end
 
 end
