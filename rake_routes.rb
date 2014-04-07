@@ -3,6 +3,8 @@ rake routes
              login GET    /login(.:format)                        sessions#new
           sessions POST   /sessions(.:format)                     sessions#create
             logout GET    /logout(.:format)                       sessions#destroy
+            lookup GET    /lookup(.:format)                       featured_lists#lookup
+        run_lookup GET    /run_lookup(.:format)                   featured_lists#run_lookup
     user_playlists GET    /users/:user_id/playlists(.:format)     playlists#index
                    POST   /users/:user_id/playlists(.:format)     playlists#create
  new_user_playlist GET    /users/:user_id/playlists/new(.:format) playlists#new
@@ -35,4 +37,4 @@ edit_featured_list GET    /featured_lists/:id/edit(.:format)      featured_lists
                    PATCH  /featured_lists/:id(.:format)           featured_lists#update
                    PUT    /featured_lists/:id(.:format)           featured_lists#update
                    DELETE /featured_lists/:id(.:format)           featured_lists#destroy
-              root GET    /                                       users#welcome
+              root GET    /

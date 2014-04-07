@@ -33,13 +33,13 @@ class FeaturedList < ActiveRecord::Base
         tracks << result
       end
     end
-    tracks.delete_if do |v|
-      if v["duration"] < 120000 ### delete tracks 2min or shorter (clips)
-        true
-      else
-        false
-      end
-    end
+    # tracks.delete_if do |v|
+    #   if v["duration"] < 120000 ### delete tracks 2min or shorter (clips)
+    #     true
+    #   else
+    #     false
+    #   end
+    # end
 
     longest = 0
     tracks.each do |d|
