@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20140404161257) do
   add_index "playlists", ["user_id"], name: "index_playlists_on_user_id", using: :btree
 
   create_table "playlists_songs", id: false, force: true do |t|
-    t.integer "playlist_id_id"
-    t.integer "song_id_id"
+    t.integer "playlist_id"
+    t.integer "song_id"
   end
 
   create_table "songs", force: true do |t|
