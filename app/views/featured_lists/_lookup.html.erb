@@ -1,0 +1,18 @@
+<%= form_tag('/run_lookup', method: 'get') do %>
+<div class="field">
+    <%= label_tag :name, 'Name' %><br>
+    <%= select_tag(:name, options_for_select([['RA Top 50'], ['Beatport Top 50']])) %>
+  </div>
+  <p>
+  <div class="field">
+    <%= label_tag :month, 'Month' %>
+    <%= select_tag(:month, options_for_select([['January'], ['February'], ['March'], ['April'], ['May'], ['June'], ['July'], [ 'August'], ['September'], ['October'], ['November'], ['December']])) %>
+  </div></p>
+<p><div class="field">
+    <%= label_tag :year, 'Year' %>
+    <%= select_tag :year, (options_for_select((2000..2014).to_a.reverse))%>
+</div></p>
+  <div class="actions">
+    <%= submit_tag "Seach Databases" %>  Please be patient... this could take a few minutes!
+  </div></p>
+<% end %>

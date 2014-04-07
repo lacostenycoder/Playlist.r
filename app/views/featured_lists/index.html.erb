@@ -1,0 +1,21 @@
+<h1>Featured Playlists</h1>
+
+<% if @featured_lists %>
+  <% @featured_lists.each do |list| %>
+  <p>
+   <%= list.name %> | <%= list.month %> <%= list.year %> <%= link_to 'View List', featured_list_path(list)%> |
+  <% if current_user && current_user.admin %>
+   <%= link_to 'Delete List', list, method: :delete, data: { confirm: 'Are you sure?'}  %>
+   <% end %>
+  <pw>
+  <% end %>
+<% end %>
+<% if current_user && current_user.admin %>
+<p><%= link_to 'New List', lookup_path %></p>
+<% end %>
+<% if !current_user || current_user.admin%>
+<p><%= link_to 'Register New User', new_user_path %></p>
+<% end %>
+<% if current_user && current_user.admin %>
+<p><%= link_to 'View Users', users_path %></p>
+<% end %>
