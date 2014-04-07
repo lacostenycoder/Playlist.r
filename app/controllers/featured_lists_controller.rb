@@ -6,6 +6,7 @@ class FeaturedListsController < ApplicationController
 
   def run_lookup
     @results = FeaturedList.create_list(params[:name], params[:month], params[:year])
+    redirect_to featured_lists_path
   end
 
 
