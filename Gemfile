@@ -55,7 +55,7 @@ gem 'pry-rails'
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
 end
-
+gem 'rails_12factor', group: :production
 #gem "twitter-bootstrap-rails"
 
 # for use with Chrome Rails Panel developer tool - see warnings
