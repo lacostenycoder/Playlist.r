@@ -5,13 +5,13 @@ class FeaturedListsController < ApplicationController
   end
 
   def run_lookup
-    @results = FeaturedList.create_list(params[:name], params[:month], params[:year])
+    @featured_list = FeaturedList.create_list(params[:name], params[:month], params[:year])
     redirect_to featured_lists_path
   end
 
 
   def index
-    @featured_lists = FeaturedList.all
+      @featured_lists = FeaturedList.all
   end
 
   def show
