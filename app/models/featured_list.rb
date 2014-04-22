@@ -67,7 +67,7 @@ class FeaturedList < ActiveRecord::Base
   end
 
   def self.create_list(name, month, year)
-    month_word = convert_month(month[0])
+    month_word = convert_month(month)
     @add_list = FeaturedList.new(name: "RA Top 50", month: month_word, year: year)
     resident_advisor_url = 'http://www.residentadvisor.net/dj-charts.aspx?top=50&mn=' + month.to_s + '&yr=' + year.to_s
     @add_list.save
