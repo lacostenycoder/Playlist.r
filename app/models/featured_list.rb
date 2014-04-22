@@ -7,50 +7,68 @@ class FeaturedList < ActiveRecord::Base
   NAME = ['RA Top 50', 'Beatport Top 50']
 
   def self.convert_month(num)
-    case num
-      when 1 then num = 'January'
-      when 2 then num = 'February'
-      when 3 then num = 'March'
-      when 4 then num = 'April'
-      when 5 then num = 'May'
-      when 6 then num = 'June'
-      when 7 then num = 'July'
-      when 8 then num = 'August'
-      when 9 then num = 'September'
-      when 10 then num = 'October'
-      when 11 then num = 'November'
-      when 12 then num = 'December'
+    case num.to_i
+    when 1 then month = 'January'
+    when 2 then month = 'February'
+    when 3 then month = 'March'
+    when 4 then month = 'April'
+    when 5 then month = 'May'
+    when 6 then month = 'June'
+    when 7 then month = 'July'
+    when 8 then month = 'August'
+    when 9 then month = 'September'
+    when 10 then month  = 'October'
+    when 11 then month  = 'November'
+    when 12 then month  = 'December'
     end
+    return month
   end
 
-  def self.soundcloud_links(artist_title)
-    artist = artist_title[0]
-    title = artist_title[1]
-    begin
-      results = SoundCloud.new(:client_id => "476bff90d2af3f775a10bf5bc1f82928").get('/search', :q => "#{artist} #{title}", :artist =>"#{artist}", :title=> "#{title}")
-      tracks = []
-      #binding.pry
-      results[:collection].each do |result|
-        if result["kind"] == "track" && result["duration"] < 900000 && result["title"].downcase.include?(title.downcase)
-          tracks << result
-        end
+  def self.soundcloud_links(array)
+    artist = array[0]
+    title = array[1]
+    count_matches = 0
+    # begin
+    results = SoundCloud.new(:client_id => "476bff90d2af3f775a10bf5bc1f82928").get('/search', :q => "#{artist} #{title}")
+    tracks = []
+    results[:collection].map do |track|
+      unless track["kind"] != "track"
+        @title_search_array = track["title"].gsub(/\W/, ' ').split
+        title.split.each do |word|
+          if @title_search_array.include?(word)
+           count_matches += 1
+         end
+       end
+
+     end
+     if count_matches >= 1
+       track["matches"] = count_matches
+       tracks << track
+     end
+   end
+   tracks_only = []
+      tracks_only = tracks.select.each do |result|
+        result["kind"] == "track" && result["duration"] < 900000
       end
+
+      best_match = tracks_only.each { |best| best["matches"] == best_match}
       longest = 0
-      tracks.each do |d|
+      best_match.each do |d|
         longest = d["duration"] if d["duration"] > longest
       end
-      track = tracks.find { |e| e["duration"] == longest } ## longest not best way to find
-      drop = track["uri"].gsub(/http:\/\//, '')
-      uri = drop.gsub(/\/tracks$/, '')
-    return uri
-
-    rescue
-       "Soundcloud Link Not Available"
-    end
+      if longest > 0
+        track = best_match.find { |e| e["duration"] == longest }
+        drop_http = track["uri"].gsub(/http:\/\//, '')
+        uri = drop_http.gsub(/\/tracks$/, '')
+        return uri
+      else
+        return "Soundcloud Link Not Available"
+      end
   end
 
- def self.create_list(name, month, year)
-    @add_list = FeaturedList.new(name: "RA Top 50", month: convert_month(month), year: year)
+  def self.create_list(name, month, year)
+    month_word = convert_month(month[0])
+    @add_list = FeaturedList.new(name: "RA Top 50", month: month_word, year: year)
     resident_advisor_url = 'http://www.residentadvisor.net/dj-charts.aspx?top=50&mn=' + month.to_s + '&yr=' + year.to_s
     @add_list.save
     require 'open-uri'
@@ -60,13 +78,13 @@ class FeaturedList < ActiveRecord::Base
     results = list.map{|b| b.css('td')}.map{|c| c.children.map{|a| a.inner_text}}
     results.shift
     results.each do |t|
-      search_params = t[2], t[3]
+      search_params = t[2], t[3].gsub(/\W/, ' ')
       url = soundcloud_links(search_params)
       song = Song.create(rank: t[0].to_i, artist: t[2], title: t[3], soundcloud_url: url)
       song.save
       @add_list.songs << song
     end
-    return @add_list
+    # return @add_list
   end
 
 end
