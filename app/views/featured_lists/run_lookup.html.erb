@@ -4,7 +4,7 @@
 <li><%= t.rank %> Artist: <%= t.artist %> Track: <%= t.title %></li>
   <% if t.soundcloud_url != "Soundcloud Link Not Available" %>
     <% link = "https://w.soundcloud.com/player/?url=https%3A//" + t.soundcloud_url + "&amp;auto_play=false&amp;hide_related=false&amp;visual=true" %>
-    <iframe width="80%" height="100" scrolling="no" frameborder="no" src="<%= link %>"></iframe>
+    <iframe width="80%" height="120" scrolling="no" frameborder="no" src="<%= link %>"></iframe>
   <% else %>
     <li>Soundcloud link not available</li>
   <% end %>
