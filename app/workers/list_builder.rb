@@ -1,8 +1,8 @@
-class HardWorker
+class ListBuilder
   include Sidekiq::Worker
 
-  def perform(params)
-    @featured_list = FeaturedList.create_list(parmas[:name], params[:month], params[:year])
+  def perform(name, month, year)
+    featured_list = FeaturedList.create_list(name, month, year)
   end
 
 end

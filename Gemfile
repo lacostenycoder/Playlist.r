@@ -51,15 +51,19 @@ gem 'nokogiri'
 #gem 'beatport'
 
 gem 'soundcloud'
+gem 'unicorn'
+gem 'foreman'
+gem 'dotenv-rails', '~> 1.0.2'
+gem 'kaminari'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'pry-rails'
+  gem 'thin'
 end
 
-group :production, do
-  gem 'rails_12factor',
-  gem 'unicorn'
+group :production do
+  gem 'rails_12factor'
 end
 #gem "twitter-bootstrap-rails"
 

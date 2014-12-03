@@ -5,7 +5,10 @@ class FeaturedListsController < ApplicationController
   end
 
   def run_lookup
-    ListBuilder.perform_async(params)
+    name = params[:name]
+    month = Date::MONTHNAMES[params[:month].to_i]
+    year = params[:year].to_s
+    ListBuilder.perform_async(name, month, year)
     flash[:notice] = "List is being created, refresh page in 1 - 5 minutes"
     redirect_to featured_lists_path
   end
@@ -17,7 +20,7 @@ class FeaturedListsController < ApplicationController
 
   def show
     @featured_list = FeaturedList.find(params[:id])
-    @songs = @featured_list.songs
+    @songs = @featured_list.songs.page params[:page]
   end
 
   def new
