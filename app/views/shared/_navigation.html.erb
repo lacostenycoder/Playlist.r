@@ -1,0 +1,17 @@
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <ul class="nav nav-tabs" role="tablist">
+      <li><a class="navbar-brand" href="/">Playlist.R</a></li>
+      <% if !current_user %>
+      <li><%= link_to 'Login', login_path %></li>
+      <% end %>
+      <% if current_user %>
+      <li><%= link_to 'Logout', logout_path %></li>
+      <% end %>
+      <li> <%= link_to 'Home' , featured_lists_path %> </li>
+
+    </ul>
+    </div>
+  </div>
+</nav>

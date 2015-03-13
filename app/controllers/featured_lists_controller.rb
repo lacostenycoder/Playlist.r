@@ -8,14 +8,18 @@ class FeaturedListsController < ApplicationController
     name = params[:name]
     month = Date::MONTHNAMES[params[:month].to_i]
     year = params[:year].to_s
-    ListBuilder.perform_async(name, month, year)
+    if Rails.env="development"
+      FeaturedList.create_list(name, month, year)
+    else
+      ListBuilder.perform_async(name, month, year)
+    end
     flash[:notice] = "List is being created, refresh page in 1 - 5 minutes"
     redirect_to featured_lists_path
   end
 
 
   def index
-      @featured_lists = FeaturedList.all
+    @featured_lists = FeaturedList.all
   end
 
   def show

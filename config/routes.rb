@@ -9,8 +9,6 @@ Playlistr::Application.routes.draw do
   get '/run_lookup', to: 'featured_lists#run_lookup'
 
 
-
-
   resources :users, shallow: true do
     resources :playlists
   end

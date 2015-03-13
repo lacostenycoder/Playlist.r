@@ -8,6 +8,23 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
- *= require_tree .
  */
+
+$brand-color: #871F78;
+$body-bg: #1c1c2c;
+$text-color: yellow;
+$navbar-height: 30px;
+$navbar-border-radius: 0;
+$navbar-default-brand-color: yellow;
+
+$font-size-base: 20px;
+$navbar-default-bg: $brand-color;
+$navbar-default-color: blue;
+
+$light-orange: #ff8c00;
+
+ul{
+    list-style-type: none;
+}
+
+@import "bootstrap"
